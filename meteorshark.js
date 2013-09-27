@@ -1,19 +1,68 @@
-if (Meteor.isClient) {
-  // Template.hello.greeting = function () {
-  //   return "Welcome to meteorshark.";
-  // };
+Packets = new Meteor.Collection("packets");
 
-  // Template.hello.events({
-  //   'click input' : function () {
-  //     // template data, if any, is available in 'this'
-  //     if (typeof console !== 'undefined')
-  //       console.log("You pressed the button");
-  //   }
-  // });
+if (Meteor.isClient) {
+  Template.packetList.packets = function () {
+    return Packets.find({});
+  };
+
+  
 }
 
 if (Meteor.isServer) {
   Meteor.startup(function () {
-    // code to run on server at startup
+    if (Packets.find().count() === 0) {
+      var packets = [
+        {
+        // "_id": "00000001",
+        "timestamp": "1.2453",
+        "srcIP": "1.1.1.1",
+        "dstIP": "40.40.40.40",
+        "L7protocol": "ICMP",
+        "size": "84",
+        "ttl": "253",
+        "srcMAC": "aaaa.bbbb.cccc",
+        "dstMAC": "dddd.eeee.ffff",
+        "L4protocol": "--",
+        "srcPort": "--",
+        "dstPort": "--",
+        "payload": "Echo (ping) Request. Code: 0"
+        },
+
+        {
+        // "_id": "00000002",
+        "timestamp": "1.7220",
+        "srcIP": "40.40.40.40",
+        "dstIP": "1.1.1.1",
+        "L7protocol": "ICMP",
+        "size": "80",
+        "ttl": "253",
+        "srcMAC": "dddd.eeee.ffff",
+        "dstMAC": "aaaa.bbbb.cccc",
+        "L4protocol": "--",
+        "srcPort": "--",
+        "dstPort": "--",
+        "payload": "Echo (ping) Reply. Code: 8"
+        },
+
+        {
+        // "_id": "00000003",
+        "timestamp": "1.9832",
+        "srcIP": "10.10.10.10",
+        "dstIP": "34.34.34.34",
+        "L7protocol": "DNS",
+        "size": "127",
+        "ttl": "56",
+        "srcMAC": "1111.2222.3333",
+        "dstMAC": "4444.5555.6666",
+        "L4protocol": "UDP",
+        "srcPort": "12343",
+        "dstPort": "53",
+        "payload": "Standard query response. Queries: api.github.com. Answers: 192.30.252.139"
+        }
+      ];
+      for (var i = 0; i < packets.length; i++) {
+        Packets.insert(packets[i]);
+      }
+    }
   });
 }
