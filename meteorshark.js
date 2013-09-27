@@ -5,13 +5,16 @@ if (Meteor.isClient) {
     return Packets.find({});
   };
 
-  
-}
+  Template.buttons.events({
+    'click #clear': function () {
+      var allPackets = Packets.find();
+      allPackets.forEach(function(packet) {
+        Packets.remove(packet._id);
+      });
+    },
 
-if (Meteor.isServer) {
-  Meteor.startup(function () {
-    if (Packets.find().count() === 0) {
-      var packets = [
+    'click #resume': function() {
+      var dummyPackets = [
         {
         // "_id": "00000001",
         "timestamp": "1.2453",
@@ -60,9 +63,16 @@ if (Meteor.isServer) {
         "payload": "Standard query response. Queries: api.github.com. Answers: 192.30.252.139"
         }
       ];
-      for (var i = 0; i < packets.length; i++) {
-        Packets.insert(packets[i]);
+      for (var i = 0; i < dummyPackets.length; i++) {
+        Packets.insert(dummyPackets[i]);
       }
-    }
+    }  
+  });
+}
+
+if (Meteor.isServer) {
+  Meteor.startup(function () {
+        
+
   });
 }
