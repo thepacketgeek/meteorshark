@@ -57,12 +57,12 @@
 	  	<div class="tr1">Time</div>
 	  	<div class="tr2">Src IP</div>
 	  	<div class="tr3">Dst IP</div>
-	  	<div class="tr4">Protocol</div>
+	  	<div class="tr4">App</div>
 	  	<div class="tr5">Size (bytes)</div>
 	  </div>
 
 	  <div class="panel-body" id="packetList">
-	  	{{> packetView}}
+	  	{{> packetList}}
 	  </div>
 	</div>
     
@@ -77,98 +77,38 @@
 </body>
 
 
-<template name="packetView">
-	<div class="packetView" data-toggle="collapse" data-target="#collapse1" data-parent="#packetList">
-		<div class="tr1">1.2453</div>
-	  	<div class="tr2">1.1.1.1</div>
-	  	<div class="tr3">4.4.4.4</div>
-	  	<div class="tr4">ICMP</div>
-	  	<div class="tr5">84</div>
+<template name="packetList">
+	{{#each packets}}
+	<div class="packetView" data-toggle="collapse" data-target="#{{_id}}" data-parent="#packetList">
+		<div class="tr1">{{timestamp}}</div>
+	  	<div class="tr2">{{srcIP}}</div>
+	  	<div class="tr3">{{dstIP}}</div>
+	  	<div class="tr4">{{L7protocol}}</div>
+	  	<div class="tr5">{{size}}</div>
 	</div>
-	<div id="collapse1" class="panel-collapse in" style="height: auto;">
+	<div id="{{_id}}" class="panel-collapse collapse">
 		<div class="packetDetailView">
 			<div class="row">
 	    		<div class="col-md-3">
-	    			<p><strong>Timestamp:</strong> 1.2453</p>
-	    			<p><strong>src IP:</strong> 1.1.1.1</p>
-		    		<p><strong>dst IP:</strong> 4.4.4.4</p>
-		    		<p><strong>Size (bytes):</strong> 84</p>
+	    			<p><strong>Timestamp: </strong>{{timestamp}}</p>
+	    			<p><strong>src IP: </strong>{{srcIP}}</p>
+		    		<p><strong>dst IP: </strong>{{dstIP}}</p>
+		    		<p><strong>Size (bytes): </strong>{{size}}</p>
 		    	</div>
 		    	<div class="col-md-3">
-	    			<p><strong>src MAC:</strong> aaaa.bbbb.cccc</p>
-		    		<p><strong>dst MAC:</strong> 1111.2222.3333</p>
-		    		<p><strong>src Port:</strong> N/A</p>
-		    		<p><strong>dst Port:</strong> N/A</p>
+	    			<p><strong>Protocol: </strong>{{L4protocol}}</p>
+	    			<p><strong>src MAC: </strong>{{srcMAC}}</p>
+		    		<p><strong>dst MAC: </strong>{{dstMAC}}</p>
+		    		<p><strong>src Port: </strong>{{srcPorc}}</p>
+		    		<p><strong>dst Port: </strong>{{dstPort}}</p>
 		    	</div>
 		    	<div class="col-md-3">
-					<p><strong>Protocol:</strong> ICMP</p>
-					<p>Echo (ping) Request</p>
-		    		<p>Code: 0</p>
+					<p><strong>Application: </strong>{{L7protocol}}</p>
+					<p>{{payload}}</p>
 		    	</div>
 	    	</div>
 		</div>
 	</div>
-	<div class="packetView" data-toggle="collapse" data-target="#collapse2" data-parent="#packetList">
-			<div class="tr1">1.7220</div>
-		  	<div class="tr2">4.4.4.4</div>
-		  	<div class="tr3">1.1.1.1</div>
-		  	<div class="tr4">ICMP</div>
-		  	<div class="tr5">80</div>
-    </div>
-    <div id="collapse2" class="panel-collapse collapse">
-    	<div class="packetDetailView">
-    		<div class="row">
-	    		<div class="col-md-3">
-	    			<p><strong>Timestamp:</strong> 1.7220</p>
-	    			<p><strong>src IP:</strong> 4.4.4.4</p>
-		    		<p><strong>dst IP:</strong> 1.1.1.1</p>
-		    		<p><strong>Size (bytes):</strong> 80</p>
-		    	</div>
-	    		<div class="col-md-3">
-	    			<p><strong>src MAC:</strong> 1111.2222.3333</p>
-		    		<p><strong>dst MAC:</strong> aaaa.bbbb.cccc</p>
-		    		<p><strong>src Port:</strong> N/A</p>
-		    		<p><strong>dst Port:</strong> N/A</p>
-		    	</div>
-		    	<div class="col-md-3">
-					<p><strong>Protocol:</strong> ICMP</p>
-					<p>Echo (ping) Reply</p>
-		    		<p>Code: 0</p>
-		    	</div>
-	    	</div>
-    	</div>
-    </div>
-    <div class="packetView" data-toggle="collapse" data-target="#collapse3" data-parent="#packetList">
-		<div class="tr1">1.9832</div>
-	  	<div class="tr2">2.2.2.2</div>
-	  	<div class="tr3">10.10.10.1</div>
-	  	<div class="tr4">DNS</div>
-	  	<div class="tr5">127</div>
-    </div>
-    <div id="collapse3" class="panel-collapse collapse">
-    	<div class="packetDetailView">
-    		<div class="row">
-	    		<div class="col-md-3">
-	    			<p><strong>Timestamp:</strong> 1.9832</p>
-	    			<p><strong>src IP:</strong> 2.2.2.2</p>
-		    		<p><strong>dst IP:</strong> 10.10.10.1</p>
-		    		<p><strong>Size (bytes):</strong> 127</p>
-		    	</div>
-	    		<div class="col-md-3">
-	    			<p><strong>src MAC:</strong> aaaa.bbbb.cccc</p>
-		    		<p><strong>dst MAC:</strong> 1111.2222.3333</p>
-		    		<p><strong>src Port:</strong> N/A</p>
-		    		<p><strong>dst Port:</strong> N/A</p>
-		    	</div>
-		    	<div class="col-md-3">
-					<p><strong>Protocol:</strong> DNS</p>
-					<p>Standard query response</p>
-		    		<p>Queries: api.github.com</p>
-		    		<p>Answers: 192.30.252.139<p>
-		    	</div>
-	    	</div>
-    	</div>
-    </div>
-</div>
+	{{/each}}
 </template>
 
