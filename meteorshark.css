@@ -73,13 +73,11 @@ body {
 .packetView:first-child {
   border-top: none;
 }
-.packetDetailView {
+.packetDetailView .row {
+  padding: 20px;
   width: 100%;
   box-shadow: inset 2px 2px 10px #ddd;
   background-color: #f8f8f8;
-}
-.packetDetailView .row {
-  padding: 20px;
 }
 
 /* Custom page CSS
