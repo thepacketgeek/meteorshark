@@ -1,13 +1,174 @@
+
 <head>
-  <title>meteorshark</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<title>Packet Cloud Viewer</title> 
+
 </head>
 
 <body>
-  {{> hello}}
+
+<!-- Wrap all page content here -->
+<div id="wrap">
+
+  <!-- Fixed navbar -->
+  <div class="navbar navbar-default navbar-fixed-top">
+    <div id="topbar"></div>
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">Packet Cloud Viewer</a>
+      </div>
+      <div class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="#">Home</a></li>
+          <li><a href="#about">About</a></li>
+        </ul>
+      </div><!--/.nav-collapse -->
+    </div>
+  </div>
+
+  <!-- Begin page content -->
+  <div class="container">
+  	<br>
+  	<div class="text-center">
+      	<div class="btn-group" data-toggle="buttons">
+			<label class="btn btn-primary">
+				<input type="radio" name="options" id="option1"> Pause
+			</label>
+			<label class="btn btn-primary">
+				<input type="radio" name="options" id="option2"> Resume
+			</label>
+		</div>
+		<button id="clear" type="button" data-loading-text="Loading..." class="btn btn-primary">
+		  Clear
+		</button>
+	</div>
+	<br>
+    <div class="panel panel-default">
+	  <div class="panel-heading">
+	  	<div class="tr1">Time</div>
+	  	<div class="tr2">Src IP</div>
+	  	<div class="tr3">Dst IP</div>
+	  	<div class="tr4">Protocol</div>
+	  	<div class="tr5">Size (bytes)</div>
+	  </div>
+
+	  <div class="panel-body" id="packetList">
+	  	{{> packetView}}
+	  </div>
+	</div>
+    
+  </div>
+</div>
+
+<div id="footer">
+  <div class="container text-center">
+    <p class="text-muted credit">Created by <a target="_blank" title="thePacketGeek" href="http://thepacketgeek.com">Mat Wood</a>. To find out more: <a target="_blank" title="GitHub" href="http://www.github.com/matplaysbass/packet-cloud-viewer">GitHub</a>.</p>
+  </div>
+</div>
 </body>
 
-<template name="hello">
-  <h1>Hello World!</h1>
-  {{greeting}}
-  <input type="button" value="Click" />
+
+<template name="packetView">
+	<div class="packetView" data-toggle="collapse" data-target="#collapse1" data-parent="#packetList">
+		<div class="tr1">1.2453</div>
+	  	<div class="tr2">1.1.1.1</div>
+	  	<div class="tr3">4.4.4.4</div>
+	  	<div class="tr4">ICMP</div>
+	  	<div class="tr5">84</div>
+	</div>
+	<div id="collapse1" class="panel-collapse in" style="height: auto;">
+		<div class="packetDetailView">
+			<div class="row">
+	    		<div class="col-md-3">
+	    			<p><strong>Timestamp:</strong> 1.2453</p>
+	    			<p><strong>src IP:</strong> 1.1.1.1</p>
+		    		<p><strong>dst IP:</strong> 4.4.4.4</p>
+		    		<p><strong>Size (bytes):</strong> 84</p>
+		    	</div>
+		    	<div class="col-md-3">
+	    			<p><strong>src MAC:</strong> aaaa.bbbb.cccc</p>
+		    		<p><strong>dst MAC:</strong> 1111.2222.3333</p>
+		    		<p><strong>src Port:</strong> N/A</p>
+		    		<p><strong>dst Port:</strong> N/A</p>
+		    	</div>
+		    	<div class="col-md-3">
+					<p><strong>Protocol:</strong> ICMP</p>
+					<p>Echo (ping) Request</p>
+		    		<p>Code: 0</p>
+		    	</div>
+	    	</div>
+		</div>
+	</div>
+	<div class="packetView" data-toggle="collapse" data-target="#collapse2" data-parent="#packetList">
+			<div class="tr1">1.7220</div>
+		  	<div class="tr2">4.4.4.4</div>
+		  	<div class="tr3">1.1.1.1</div>
+		  	<div class="tr4">ICMP</div>
+		  	<div class="tr5">80</div>
+    </div>
+    <div id="collapse2" class="panel-collapse collapse">
+    	<div class="packetDetailView">
+    		<div class="row">
+	    		<div class="col-md-3">
+	    			<p><strong>Timestamp:</strong> 1.7220</p>
+	    			<p><strong>src IP:</strong> 4.4.4.4</p>
+		    		<p><strong>dst IP:</strong> 1.1.1.1</p>
+		    		<p><strong>Size (bytes):</strong> 80</p>
+		    	</div>
+	    		<div class="col-md-3">
+	    			<p><strong>src MAC:</strong> 1111.2222.3333</p>
+		    		<p><strong>dst MAC:</strong> aaaa.bbbb.cccc</p>
+		    		<p><strong>src Port:</strong> N/A</p>
+		    		<p><strong>dst Port:</strong> N/A</p>
+		    	</div>
+		    	<div class="col-md-3">
+					<p><strong>Protocol:</strong> ICMP</p>
+					<p>Echo (ping) Reply</p>
+		    		<p>Code: 0</p>
+		    	</div>
+	    	</div>
+    	</div>
+    </div>
+    <div class="packetView" data-toggle="collapse" data-target="#collapse3" data-parent="#packetList">
+		<div class="tr1">1.9832</div>
+	  	<div class="tr2">2.2.2.2</div>
+	  	<div class="tr3">10.10.10.1</div>
+	  	<div class="tr4">DNS</div>
+	  	<div class="tr5">127</div>
+    </div>
+    <div id="collapse3" class="panel-collapse collapse">
+    	<div class="packetDetailView">
+    		<div class="row">
+	    		<div class="col-md-3">
+	    			<p><strong>Timestamp:</strong> 1.9832</p>
+	    			<p><strong>src IP:</strong> 2.2.2.2</p>
+		    		<p><strong>dst IP:</strong> 10.10.10.1</p>
+		    		<p><strong>Size (bytes):</strong> 127</p>
+		    	</div>
+	    		<div class="col-md-3">
+	    			<p><strong>src MAC:</strong> aaaa.bbbb.cccc</p>
+		    		<p><strong>dst MAC:</strong> 1111.2222.3333</p>
+		    		<p><strong>src Port:</strong> N/A</p>
+		    		<p><strong>dst Port:</strong> N/A</p>
+		    	</div>
+		    	<div class="col-md-3">
+					<p><strong>Protocol:</strong> DNS</p>
+					<p>Standard query response</p>
+		    		<p>Queries: api.github.com</p>
+		    		<p>Answers: 192.30.252.139<p>
+		    	</div>
+	    	</div>
+    	</div>
+    </div>
+</div>
 </template>
+
