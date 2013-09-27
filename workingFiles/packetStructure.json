@@ -1,0 +1,17 @@
+packetView = {
+	"timestamp": "",
+	"srcIP": "",
+	"dstIP": "",
+	"L7protocol": "",
+	"size": "",
+	"ttl": ""
+};
+
+packetDetailView = {
+	"srcMAC": "",
+	"dstMAC": "",
+	"L4protocol": "",
+	"srcPort": "",
+	"dstPort": "",
+	"payload": "",
+};
