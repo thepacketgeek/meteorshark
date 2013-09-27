@@ -38,19 +38,7 @@
   <!-- Begin page content -->
   <div class="container">
   	<br>
-  	<div class="text-center">
-      	<div class="btn-group" data-toggle="buttons">
-			<label class="btn btn-primary">
-				<input type="radio" name="options" id="option1"> Pause
-			</label>
-			<label class="btn btn-primary">
-				<input type="radio" name="options" id="option2"> Resume
-			</label>
-		</div>
-		<button id="clear" type="button" data-loading-text="Loading..." class="btn btn-primary">
-		  Clear
-		</button>
-	</div>
+	{{> buttons}}
 	<br>
     <div class="panel panel-default">
 	  <div class="panel-heading">
@@ -75,6 +63,23 @@
   </div>
 </div>
 </body>
+
+
+<template name="buttons">
+	<div class="text-center">
+      	<div class="btn-group" data-toggle="buttons">
+			<label class="btn btn-primary">
+				<input type="radio" name="options" id="pause"> Pause
+			</label>
+			<label class="btn btn-primary">
+				<input type="radio" name="options" id="resume"> Resume
+			</label>
+		</div>
+		<button id="clear" type="button" class="btn btn-primary">
+	  		Clear
+		</button>
+	</div>
+</template>
 
 
 <template name="packetList">
