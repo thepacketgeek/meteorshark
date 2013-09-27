@@ -10,16 +10,23 @@
 </head>
 
 <body>
+<!-- {{#unless currentUser}}
+    {{>login}}
+{{/unless}}
+{{#if currentUser}}
+    {{>packetView}}
+{{/if}} -->
 {{>packetView}}
 </body>
 
 <template name="login">
-
 <form class="form-signin" id="login-form" action="action">
+    
     <h2 class="form-signin-heading">Please sign in</h2>
     <br>
     <input type="text" id="login-email" class="form-control" placeholder="Username" autofocus>
     <input type="password" id="login-password" class="form-control" placeholder="Password">
+    <p id="loginError" class="text-center"></p>
     <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
 </form>
 </template>
@@ -46,6 +53,7 @@
           <li class="active"><a href="#">Home</a></li>
           <li><a href="#about">About</a></li>
         </ul>
+        <!-- {{loginButtons}} -->
       </div><!--/.nav-collapse -->
     </div>
   </div>
