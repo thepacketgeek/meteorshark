@@ -56,8 +56,15 @@ if (Meteor.isClient) {
   });
 
   if (Meteor.userId()){
-    Meteor.subscribe("packets", Meteor.userId());
+    var subscribing = Meteor.subscribe("packets", Meteor.userId());
   }
+
+  Template.buttons.events({
+    'click #pause': function () {
+      // Stop loading packets into packetList, this currently removes from the view
+      //subscribing.stop();
+    }
+  });
 
   Template.buttons.events({
     'click #clear': function () {
@@ -121,6 +128,8 @@ if (Meteor.isClient) {
         Packets.insert(dummyPackets[i]);
         console.log('Inserting packet: ', dummyPackets[i]);
       }
+      //Continue Listening for packets (repopulate PacketList)
+      //subscribing = Meteor.subscribe("packets", Meteor.userId());
     }  
   });
 }
