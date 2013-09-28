@@ -1,0 +1,15 @@
+{
+  "meteor": {},
+  "dependencies": {
+    "basePackages": {
+      "collection-api": {}
+    },
+    "packages": {
+      "collection-api": {
+        "git": "https://github.com/crazytoad/meteor-collectionapi.git",
+        "tag": "v0.1.15",
+        "commit": "b62c51f387287726cf3b64077f7bc69604ec2f5e"
+      }
+    }
+  }
+}
