@@ -5,8 +5,8 @@
 
 standard-app-packages
 preserve-inputs
-bootstrap
-jquery
 accounts-password
 accounts-base
 collection-api
+jquery
+bootstrap-3
