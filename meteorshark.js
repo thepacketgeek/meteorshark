@@ -1,9 +1,6 @@
 Packets = new Meteor.Collection("packets");
 
 if (Meteor.isClient) {
-  // Accounts.onCreateUser(function(opt, user) {
-  //   Packets = new Meteor.Collection(user.userId);
-  // });
 
   Template.packetList.packets = function () {
     return Packets.find({});
@@ -22,7 +19,6 @@ if (Meteor.isClient) {
         Meteor.logout();
     }
   });
-
 
   Template.login.events({
     'submit #login-form': function(e, t){
@@ -45,8 +41,12 @@ if (Meteor.isClient) {
         var username = t.find('#login-username').value,
             password = t.find('#login-password').value;
         Meteor.loginWithPassword(username, password);
-    },
+    }
   });
+
+  if (Meteor.userId()){
+    Meteor.subscribe("packets", Meteor.userId());
+  }
 
   Template.buttons.events({
     'click #clear': function () {
@@ -59,7 +59,6 @@ if (Meteor.isClient) {
     'click #resume': function() {
       var dummyPackets = [
         {
-        // "_id": "00000001",
         "timestamp": "1.2453",
         "srcIP": "1.1.1.1",
         "dstIP": "40.40.40.40",
@@ -71,11 +70,11 @@ if (Meteor.isClient) {
         "L4protocol": "--",
         "srcPort": "--",
         "dstPort": "--",
-        "payload": "Echo (ping) Request. Code: 0"
+        "payload": "Echo (ping) Request. Code: 0",
+        "owner": Meteor.userId()
         },
 
         {
-        // "_id": "00000002",
         "timestamp": "1.7220",
         "srcIP": "40.40.40.40",
         "dstIP": "1.1.1.1",
@@ -87,11 +86,11 @@ if (Meteor.isClient) {
         "L4protocol": "--",
         "srcPort": "--",
         "dstPort": "--",
-        "payload": "Echo (ping) Reply. Code: 8"
+        "payload": "Echo (ping) Reply. Code: 8",
+        "owner": Meteor.userId()
         },
 
         {
-        // "_id": "00000003",
         "timestamp": "1.9832",
         "srcIP": "10.10.10.10",
         "dstIP": "34.34.34.34",
@@ -103,21 +102,21 @@ if (Meteor.isClient) {
         "L4protocol": "UDP",
         "srcPort": "12343",
         "dstPort": "53",
-        "payload": "Standard query response. Queries: api.github.com. Answers: 192.30.252.139"
+        "payload": "Standard query response. Queries: api.github.com. Answers: 192.30.252.139",
+        "owner": Meteor.userId()
         }
       ];
       for (var i = 0; i < dummyPackets.length; i++) {
         Packets.insert(dummyPackets[i]);
+        console.log('Inserting packet: ', dummyPackets[i]);
       }
     }  
   });
 }
 
 if (Meteor.isServer) {
-  Meteor.startup(function () {
-        
-
+  Meteor.publish("packets", function(id){
+    return Packets.find({"owner": id});
   });
-
   
 }
