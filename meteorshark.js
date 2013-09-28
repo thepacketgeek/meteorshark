@@ -17,19 +17,12 @@ if (Meteor.isClient) {
     return Meteor.user()._id;
   };
 
-  Template.login.creatingAccount = function () {
-        return Session.get('creatingAccount');
-    };
-
   Template.packetView.events({
     'click #logout': function (e, t) {
         Meteor.logout();
     }
   });
 
-  Accounts.config({
-    forbidClientAccountCreation: true
-  });
 
   Template.login.events({
     'submit #login-form': function(e, t){
@@ -48,36 +41,11 @@ if (Meteor.isClient) {
 
       return false; 
     },
-
-    'click #createaccountform': function (e, t) {
-        Session.set('creatingAccount', true);
-    },
-    'click #loginform': function (e, t) {
-        Session.set('creatingAccount', false);
-    },
     'click #login': function (e, t) {
         var username = t.find('#login-username').value,
             password = t.find('#login-password').value;
         Meteor.loginWithPassword(username, password);
     },
-    'submit #create-form': function (e, t) {
-        e.preventDefault();
-        
-        var username = t.find('#create-username').value,
-            password = t.find("#create-password").value; 
-
-        Accounts.createUser({username: username, password : password}, function(err){
-          if (err) {
-            $('p#createError').html('Account Creation Failed');
-            console.log('Account Creation Failed');
-          } else {
-            $('p#createError').html('Logging in . . .');
-            console.log('Created new account', username);
-            Session.set('creatingAccount', false);
-          }
-
-        });
-      }
   });
 
   Template.buttons.events({
