@@ -9,8 +9,12 @@ if (Meteor.isClient) {
     return Packets.find({});
   };
 
-  Template.packetList.username = function() {
-    return Session.get('username');
+  Template.packetView.username = function() {
+    return Meteor.user().username;
+  };
+
+  Template.packetView.token = function() {
+    return Meteor.user()._id;
   };
 
   Template.login.creatingAccount = function () {
@@ -24,7 +28,7 @@ if (Meteor.isClient) {
   });
 
   Accounts.config({
-    forbidClientAccountCreation: false
+    forbidClientAccountCreation: true
   });
 
   Template.login.events({
@@ -39,9 +43,9 @@ if (Meteor.isClient) {
           $('p#loginError').html('Incorrect Login');
         else
           $('p#loginError').html('Logging in . . .');
+          console.log('Logging in: ', username);
       });
 
-      Session.set('username', username);
       return false; 
     },
 
@@ -68,8 +72,7 @@ if (Meteor.isClient) {
             console.log('Account Creation Failed');
           } else {
             $('p#createError').html('Logging in . . .');
-            console.log('Created new account.');
-            Session.set('username', username);
+            console.log('Created new account', username);
             Session.set('creatingAccount', false);
           }
 
