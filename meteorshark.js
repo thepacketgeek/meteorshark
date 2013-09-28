@@ -1,5 +1,16 @@
 Packets = new Meteor.Collection("packets");
 
+Packets.allow({
+  insert: function (userId, doc) {
+    return (userId && doc.owner === userId);
+  },
+  remove: function (userId, doc) {
+    return doc.owner === userId;
+  },
+  fetch: ['owner']
+});
+
+
 if (Meteor.isClient) {
 
   Template.packetList.packets = function () {
