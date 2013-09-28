@@ -1,16 +1,80 @@
 Packets = new Meteor.Collection("packets");
 
 if (Meteor.isClient) {
+  // Accounts.onCreateUser(function(opt, user) {
+  //   Packets = new Meteor.Collection(user.userId);
+  // });
+
   Template.packetList.packets = function () {
     return Packets.find({});
   };
+
+  Template.packetList.username = function() {
+    return Session.get('username');
+  };
+
+  Template.login.creatingAccount = function () {
+        return Session.get('creatingAccount');
+    };
+
+  Template.packetView.events({
+    'click #logout': function (e, t) {
+        Meteor.logout();
+    }
+  });
 
   Accounts.config({
     forbidClientAccountCreation: false
   });
 
-  Accounts.ui.config({
-    passwordSignupFields: 'USERNAME_ONLY'
+  Template.login.events({
+    'submit #login-form': function(e, t){
+      e.preventDefault();
+      // retrieve the input field values
+      var username = t.find('#login-username').value,
+          password = t.find('#login-password').value;
+
+      Meteor.loginWithPassword(username, password, function(err){
+        if (err)
+          $('p#loginError').html('Incorrect Login');
+        else
+          $('p#loginError').html('Logging in . . .');
+      });
+
+      Session.set('username', username);
+      return false; 
+    },
+
+    'click #createaccountform': function (e, t) {
+        Session.set('creatingAccount', true);
+    },
+    'click #loginform': function (e, t) {
+        Session.set('creatingAccount', false);
+    },
+    'click #login': function (e, t) {
+        var username = t.find('#login-username').value,
+            password = t.find('#login-password').value;
+        Meteor.loginWithPassword(username, password);
+    },
+    'submit #create-form': function (e, t) {
+        e.preventDefault();
+        
+        var username = t.find('#create-username').value,
+            password = t.find("#create-password").value; 
+
+        Accounts.createUser({username: username, password : password}, function(err){
+          if (err) {
+            $('p#createError').html('Account Creation Failed');
+            console.log('Account Creation Failed');
+          } else {
+            $('p#createError').html('Logging in . . .');
+            console.log('Created new account.');
+            Session.set('username', username);
+            Session.set('creatingAccount', false);
+          }
+
+        });
+      }
   });
 
   Template.buttons.events({
@@ -83,4 +147,6 @@ if (Meteor.isServer) {
         
 
   });
+
+  
 }

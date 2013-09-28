@@ -10,25 +10,44 @@
 </head>
 
 <body>
-{{#unless currentUser}}
-    {{loginButtons}}
-{{/unless}}
-{{#if currentUser}}
-    {{>packetView}}
-{{/if}}
+	{{>login}}
 </body>
 
 <template name="login">
+{{#if currentUser}}
+	{{>packetView}}
+{{else}}
+	{{#if creatingAccount}}
+	    {{>newAccountForm}}
+	{{else}}
+		{{>loginForm}}
+	{{/if}}
+{{/if}}
+</template>
+
+<template name="loginForm">
 <form class="form-signin" id="login-form" action="action">
-    <h2 class="form-signin-heading text-center">Please sign in</h2>
+    <h2 class="form-signin-heading text-center">Please Sign In</h2>
     <br>
-    <input type="text" id="login-email" class="form-control" placeholder="Username" autofocus>
+    <input type="text" id="login-username" class="form-control" placeholder="Username" autofocus>
     <input type="password" id="login-password" class="form-control" placeholder="Password">
-    <p id="loginError" class="text-center"></p>
-    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+    <p id="loginError" class="text-center"> </p>
+    <button id="login" class="btn btn-lg btn-primary btn-block">Sign in</button>
+    <p class="text-center"> ( <span id="createaccountform"> Create Account </span> ) </p>
 </form>
 </template>
 
+<template name="newAccountForm">
+<form class="form-signin" id="create-form" action="action">
+	<h2 class="form-signin-heading text-center">Create Account</h2>
+    <br>
+    <input type="text" id="create-username" class="form-control" placeholder="Username" />
+    <input type="password" id="create-password" class="form-control" placeholder="Password" />
+     <p id="createError" class="text-center"> </p>
+    <button id="createaccount" class="btn btn-lg btn-primary btn-block" type="submit"> Create Account </button>
+    <p class="text-center"> ( <span id="loginform"> Login </span> ) </p>
+</form>
+</template>
 
 <template name="packetView">
 <!-- Wrap all page content here -->
@@ -44,13 +63,12 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="#">Packet Cloud Viewer</a>
+        <a class="navbar-brand" href="#">// MeteorShark //</a>
       </div>
       <div class="collapse navbar-collapse">
         <ul class="nav navbar-nav">
           <li class="active"><a href="#">Home</a></li>
-          <li><a href="#about">About</a></li>
-          <li>{{loginButtons}}</li>
+          <li><a id="logout" href="#">{{username}} [ Log Out ]</a></li>
         </ul>
       </div>
     </div>
