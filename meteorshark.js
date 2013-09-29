@@ -25,6 +25,10 @@ if (Meteor.isClient) {
     return Meteor.user()._id;
   };
 
+  Template.packetView.paused = function() {
+    return Session.get('paused');
+  };
+
   Template.packetView.events({
     'click #logout': function (e, t) {
         Meteor.logout();
@@ -44,6 +48,7 @@ if (Meteor.isClient) {
         else
           $('p#loginError').html('Logging in . . .');
           console.log('Logging in: ', username);
+          Session.set('paused', false);
       });
 
       return false; 
@@ -60,13 +65,6 @@ if (Meteor.isClient) {
   }
 
   Template.buttons.events({
-    'click #pause': function () {
-      // Stop loading packets into packetList, this currently removes from the view
-      //subscribing.stop();
-    }
-  });
-
-  Template.buttons.events({
     'click #clear': function () {
       var allPackets = Packets.find();
       allPackets.forEach(function(packet) {
@@ -74,9 +72,17 @@ if (Meteor.isClient) {
       });
     },
 
-    'click #resume': function() {
+    'click #pause': function (e, t) {
+      e.preventDefault();
+      console.log('Clicked Pause');
+      // Stop loading packets into packetList, this currently removes from the view
+      Session.set('paused', true);
+    },
+    'click #resume': function(e, t) {
+      e.preventDefault();
+      console.log('Clicked Resume');
       //Continue Listening for packets (repopulate PacketList)
-      //subscribing = Meteor.subscribe("packets", Meteor.userId());
+      Session.set('paused', false);
     }  
   });
 }
