@@ -3,13 +3,15 @@ import json
 import random
 import time
 
+## Returns a string of a random int between 1 and 254(default)
 def randOct(end = 254):
 	return str(random.randint(1, end))
 
 ## Used for random size or TTL
 def randTS(max = 256):
 	return str(random.randint(1, max/8) * 8)
-	
+
+## Returns a string of a hex number 4 digits long, with the preceding '0x' sliced off	
 def randHex(max = 65535):
 	return str(hex(random.randint(1, max)))[2:]
 	
