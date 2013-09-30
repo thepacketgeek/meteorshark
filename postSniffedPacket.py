@@ -7,31 +7,25 @@ import time
 ## define POST parameters
 userToken = "ZNss5F8svsW3wDWTX"
 url = 'http://localhost:3000/api/packets'
-
-##sniff ICMP packets	
-count = 10
-sniff(filter="tcp", count=10)
-a=_
-
-packetDump = []
-for i in a:
-	packetDump.push(\
-		{'owner': userToken,\
-		"timestamp": time.strftime("%m/%d/%y %I:%M:%S %p", time.gmtime()),\
-		"srcIP": a[i][IP].src,\
-		"dstIP": a[i][IP].dst,\
-		"L7protocol": a[i][IP].proto,\
-		"size": a[i][IP].len,\
-		"ttl": a[i][IP].ttl,\
-		"srcMAC": a[i][Ether].src,\
-		"dstMAC": a[i][Ether].dst,\
-		"L4protocol": "N/A",\
-		"srcPort": a[i][TCP].sport,\
-		"dstPort": a[i][TCP].dport,\
-		"payload": a[i][TCP].options}\
-		)
-
-## POST sniffed packet
 headers = {'content-type': 'application/json'}
-for packet in packetDump:
-	r = requests.post(url, data=json.dumps(packetDump[i]), headers=headers)
+
+def uploadPacket(a):
+	payload = {'owner': userToken, \
+	"timestamp": time.strftime("%m/%d/%y %I:%M:%S %p", time.gmtime()), \
+	"srcIP": a[0][IP].src, \
+	"dstIP": a[0][IP].dst, \
+	"L7protocol": a[0][IP].proto, \
+	"size": a[0][IP].len, \
+	"ttl": a[0][IP].ttl, \
+	"srcMAC": a[0][Ether].src, \
+	"dstMAC": a[0][Ether].dst, \
+	"L4protocol": "N/A", \
+	"srcPort": a[0][TCP].sport, \
+	"dstPort": a[0][TCP].dport, \
+	"payload": "test" \
+	}
+	r = requests.post(url, data=json.dumps(payload), headers=headers)
+	
+##sniff ICMP packets	
+count = 200
+sniff(prn=uploadPacket, filter="tcp port 23 and ip", count=10)
