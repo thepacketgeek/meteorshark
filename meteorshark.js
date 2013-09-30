@@ -29,6 +29,10 @@ if (Meteor.isClient) {
     return Session.get('paused');
   };
 
+  Template.packetView.packetCount = function() {
+    return Packets.find({"owner": Meteor.user()._id}).count();
+  };
+
   Template.packetView.events({
     'click #logout': function (e, t) {
         Meteor.logout();
