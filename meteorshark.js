@@ -14,7 +14,7 @@ Packets.allow({
 if (Meteor.isClient) {
 
   Template.packetList.packets = function () {
-    return Packets.find({});
+    return Packets.find({}, {sort: {"timestamp": "desc"}, reactive: true}).fetch();
   };
 
   Template.packetView.username = function() {
@@ -23,10 +23,6 @@ if (Meteor.isClient) {
 
   Template.packetView.token = function() {
     return Meteor.user()._id;
-  };
-
-  Template.packetView.paused = function() {
-    return Session.get('paused');
   };
 
   Template.packetView.packetCount = function() {
@@ -52,7 +48,6 @@ if (Meteor.isClient) {
         else
           $('p#loginError').html('Logging in . . .');
           console.log('Logging in: ', username);
-          Session.set('paused', false);
       });
 
       return false; 
@@ -78,15 +73,13 @@ if (Meteor.isClient) {
 
     'click #pause': function (e, t) {
       e.preventDefault();
-      console.log('Clicked Pause');
-      // Stop loading packets into packetList, this currently removes from the view
-      Session.set('paused', true);
+      Template.packetList.packets = Packets.find({}, {sort: {"timestamp": "desc"}}).fetch();
     },
     'click #resume': function(e, t) {
       e.preventDefault();
-      console.log('Clicked Resume');
-      //Continue Listening for packets (repopulate PacketList)
-      Session.set('paused', false);
+      Template.packetList.packets = function () {
+        return Packets.find({}, {sort: {"timestamp": "desc"}, reactive: true}).fetch();
+      };
     }  
   });
 }
@@ -94,7 +87,6 @@ if (Meteor.isClient) {
 if (Meteor.isServer) {
   Meteor.startup(function () {
 
-    // All values listed below are default
     collectionApi = new CollectionAPI({
       authToken: undefined,              // Require this string to be passed in on each request
       apiPath: 'api',                    // API path prefix
@@ -106,9 +98,8 @@ if (Meteor.isServer) {
       certificateFile: 'certificate.pem' // SSL certificate key file (only used if SSL is enabled)
     });
 
-    // Add the collection Players to the API "/players" path
+    // Add the collection Packets to the API "/packets" path
     collectionApi.addCollection(Packets, 'packets', {
-      // All values listed below are default
       authToken: undefined,                   // Require this string to be passed in on each request
       methods: ['POST'],  // Allow creating, reading, updating, and deleting
       before: {  // This methods, if defined, will be called before the POST/GET/PUT/DELETE actions are performed on the collection. If the function returns false the action will be canceled, if you return true the action will take place.
