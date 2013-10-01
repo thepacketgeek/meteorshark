@@ -14,7 +14,7 @@ Packets.allow({
 if (Meteor.isClient) {
 
   Template.packetList.packets = function () {
-    return Packets.find({}, {sort: {"timestamp": "desc"}, reactive: true}).fetch();
+    return Packets.find({}, {sort: {"timestamp": "desc"}}).fetch();
   };
 
   Template.packetView.username = function() {
@@ -77,6 +77,7 @@ if (Meteor.isClient) {
     },
     'click #resume': function(e, t) {
       e.preventDefault();
+      Template.packetList.packets = Packets.find({}, {sort: {"timestamp": "desc"}}).fetch();
       Template.packetList.packets = function () {
         return Packets.find({}, {sort: {"timestamp": "desc"}, reactive: true}).fetch();
       };
