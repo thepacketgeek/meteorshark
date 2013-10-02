@@ -47,13 +47,21 @@ body {
 }
 
 /* Packet View Specific style */
-.tr1, .tr2, .tr3, .tr4 {
-  width: 20%;
-  display: inline-block;
+.tr1, .tr2, .tr3, .tr4, .tr5, .tr6 {
+	display: inline-block;
+	overflow: hidden;
 }
-.tr5, .tr6 {
-  width: 8%;
-  display: inline-block;
+.tr1 { /*Timestamp*/
+	width: 16%;
+}
+.tr2, .tr3 { /*Src & Dst*/
+	width: 28%;
+}
+.tr4 { /*Application*/
+	width: 12%;
+}
+.tr5, .tr6 { /*Size & TTL*/
+	width: 6%;
 }
 .tr2, .tr3, .tr4, .tr5, .tr6 {
   border-left: 1px solid #ddd;
