@@ -17,7 +17,11 @@
 {{#if currentUser}}
 	{{>packetView}}
 {{else}}
-	{{>loginForm}}
+	{{#if creatingAccount}}
+	    {{>newAccountForm}}
+	{{else}}
+		{{>loginForm}}
+	{{/if}}
 {{/if}}
 </template>
 
@@ -29,6 +33,20 @@
     <input type="password" id="login-password" class="form-control" placeholder="Password">
     <p id="loginError" class="text-center"> </p>
     <button id="login" class="btn btn-lg btn-primary btn-block">Sign in</button>
+    <p class="text-center"> ( <span id="createaccountform"> Create Account </span> ) </p>
+</form>
+</template>
+
+<template name="newAccountForm">
+<form class="form-signin" id="create-form" action="action">
+	<h2 class="form-signin-heading text-center">Create Account</h2>
+    <br>
+    <input type="text" id="create-username" class="form-control" placeholder="Username" />
+    <input type="password" id="create-password" class="form-control" placeholder="Password" />
+     <p id="createError" class="text-center"> </p>
+    <button id="createaccount" class="btn btn-lg btn-primary btn-block" type="submit"> Create Account </button>
+    <p class="text-center"> ( <span id="loginform"> Login </span> ) </p>
+
 </form>
 </template>
 
@@ -80,7 +98,7 @@
 
 <div id="footer">
   <div class="container text-center">
-    <p class="text-muted credit">Created by <a target="_blank" title="thePacketGeek" href="http://thepacketgeek.com">Mat Wood</a>. To find out more: <a target="_blank" title="GitHub" href="http://www.github.com/matplaysbass/packet-cloud-viewer">GitHub</a>.</p>
+    <p class="text-muted credit">Created by <a target="_blank" title="thePacketGeek" href="http://thepacketgeek.com">thepacketgeek</a>. To find out more: <a target="_blank" title="GitHub" href="http://www.github.com/matplaysbass/packet-cloud-viewer">GitHub</a>.</p>
   </div>
 </div>
 </template>
