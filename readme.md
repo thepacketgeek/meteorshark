@@ -8,7 +8,7 @@ This project came-to-be while I was preparing for a presentation on scapy for pe
 
 ### Accessing the interface
 
-![Alt text](meteorshark1.png "Screenshot #1")
+![screenshot1](meteorshark1.png "Screenshot #1")
 
 Due to the way packets are stored in the MongoDB for account separation, users must have an account so they can insert packets with their own token.  Once installed, go to <http://localhost:3000/> and create an account, or check out a [public instance, hosted by Meteor](http://meteorshark.meteor.com)!
 
