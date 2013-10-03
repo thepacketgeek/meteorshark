@@ -12,11 +12,11 @@ This project came-to-be while I was preparing for a presentation on scapy for pe
 
 Due to the way packets are stored in the MongoDB for account separation, users must have an account so they can insert packets with their own token.  Once installed, go to <http://localhost:3000/> and create an account, or check out a [public instance, hosted by Meteor](http://meteorshark.meteor.com)!
 
-Once logged in, you can see your account Token at the bottom of the main screen.  Use this for the `owner` property in the packet.json explained below.
+Once logged in, you can see your account Token in the top right corner.  Use this for the `owner` property in the packet.json explained below.
 
 ### Viewing Packets
 
-As the API/DB is populated with packets you will see them appear on the screen. Each packet is expandable for more information (info provided depends on the packet type and protocol support in the client side script). You can pause and resume the packet loading with the buttons on top.  While paused, you can see if you have received more packets by looking at the Packet Count on the bottom of the main screen, next to the token.
+As the API/DB is populated with packets you will see them appear on the screen. Each packet is expandable for more information (info provided depends on the packet type and protocol support in the client side script). You can pause and resume the packet loading with the buttons on top.  While paused, you can see if you have received more packets by looking at the Packet Count in the top right corner, next to the token.
 
 ### Packet Structure
 
