@@ -25,7 +25,25 @@
 {{/if}}
 </template>
 
+<template name="introheader">
+	  <div class="navbar navbar-default navbar-fixed-top">
+	    <div id="topbar"></div>
+	    <div class="container">
+	      <div class="navbar-header">
+	        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+	          <span class="icon-bar"></span>
+	          <span class="icon-bar"></span>
+	          <span class="icon-bar"></span>
+	        </button>
+	        <a class="navbar-brand" href="#">// MeteorShark //</a>
+	      </div>
+	      <p id="headerinfo" class="text-right">For details, check out: <a href="https://www.gihub.com/thepacketgeek/meteorshark">GitHub>meteorshark</a>.</p>
+	    </div>
+	  </div>
+</template>
+
 <template name="loginForm">
+{{>introheader}}
 <form class="form-signin" id="login-form" action="action">
     <h2 class="form-signin-heading text-center">Please Sign In</h2>
     <br>
@@ -38,6 +56,7 @@
 </template>
 
 <template name="newAccountForm">
+{{>introheader}}
 <form class="form-signin" id="create-form" action="action">
 	<h2 class="form-signin-heading text-center">Create Account</h2>
     <br>
