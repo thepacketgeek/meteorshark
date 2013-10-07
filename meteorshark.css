@@ -36,7 +36,7 @@ body {
   background-color: #f8f8f8;
 }
 #wrap > .container {
-  padding: 60px 15px 0;
+  padding: 20px 15px 0;
 }
 .container .credit {
   margin: 20px 0;
@@ -133,6 +133,10 @@ code {
 	float:left;
 	background-color: #428bca;
 	width: 100%;
+}
+.navbar-fixed-top {
+	position: relative;
+	margin-bottom: 0;
 }
 #headerinfo {
 	float: right;
