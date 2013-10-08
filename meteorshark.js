@@ -29,13 +29,25 @@ if (Meteor.isClient) {
     return Packets.find({"owner": Meteor.user()._id}).count();
   };
 
-  Template.login.creatingAccount = function () {
+  Template.loginPage.creatingAccount = function () {
     return Session.get('creatingAccount');
   };
+
+  Template.loginPage.events({
+    'click #logout': function (e, t) {
+        Meteor.logout();
+    }
+  });
 
   Template.packetView.events({
     'click #logout': function (e, t) {
         Meteor.logout();
+    }
+  });
+
+  Template.loginForm.events({
+    'click #createaccountform': function (e, t) {
+        Session.set('creatingAccount', true);
     }
   });
 
@@ -57,9 +69,6 @@ if (Meteor.isClient) {
       return false; 
     },
 
-    'click #createaccountform': function (e, t) {
-        Session.set('creatingAccount', true);
-    },
     'click #loginform': function (e, t) {
         Session.set('creatingAccount', false);
     },
