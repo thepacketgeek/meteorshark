@@ -118,11 +118,11 @@
 <template name="buttons">
 	<div class="text-center">
       	<div class="btn-group" data-toggle="buttons">
-			<label class="btn btn-primary" id="pause">
+			<label class="btn btn-primary {{#if isPaused}} active {{/if}}" id="pause">
 				<input type="radio" name="options"> Pause
 			</label>
-			<label class="btn btn-primary" id="resume">
-				<input type="radio" name="options"> Resume
+			<label class="btn btn-primary {{#if isPaused}} {{else}} active {{/if}}" id="live">
+				<input type="radio" name="options"> Live
 			</label>
 		</div>
 		<button id="clear" type="button" class="btn btn-primary">
@@ -134,13 +134,13 @@
 
 <template name="packetList">
 {{#each packets}}
-	<div class="packetView" data-toggle="collapse" data-target="#{{_id}}" data-parent="#packetList">
+	<div class="packetView collapsed" data-toggle="collapse" data-target="#{{_id}}" data-parent="#packetList">
 		<div class="tr1">{{timestamp}}</div>
-	  	<div class="tr2">{{srcIP}}</div>
-	  	<div class="tr3">{{dstIP}}</div>
-	  	<div class="tr4">{{L7protocol}}</div>
+	  	<div class="tr2">{{#if srcIP}} {{srcIP}} {{else}} --- {{/if}}</div>
+	  	<div class="tr3">{{#if dstIP}} {{dstIP}} {{else}} --- {{/if}}</div>
+	  	<div class="tr4">{{#if L7protocol}} {{L7protocol}} {{else}} --- {{/if}}</div>
 	  	<div class="tr5">{{size}}</div>
-	  	<div class="tr6">{{ttl}}</div>
+	  	<div class="tr6">{{#if ttl}} {{ttl}} {{else}} --- {{/if}}</div>
 	</div>
 	<div id="{{_id}}" class="panel-collapse collapse">
 		<div class="packetDetailView">

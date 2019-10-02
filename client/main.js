@@ -8,7 +8,7 @@ import './main.html';
 
 Template.packetList.helpers({
   packets() {
-    return Packets.find({}, { sort: { "timestamp": "desc" } }).fetch();
+    return Packets.find({}, { sort: { "timestamp": "desc" }, reactive: !Session.get('isPaused') }).fetch();
   },
 });
 
@@ -60,7 +60,6 @@ Template.login.events({
         $('p#loginError').html('Incorrect Login');
       else
         $('p#loginError').html('Logging in . . .');
-      console.log('Logging in: ', username);
     });
 
     return false;
@@ -82,15 +81,12 @@ Template.login.events({
     let username = t.find('#create-username').value;
     let password = t.find("#create-password").value;
 
-    console.log(username);
-
     Accounts.createUser({ username: username, password: password }, function (err) {
       if (err) {
         $('p#createError').html('Account Creation Failed');
-        console.log('Account Creation Failed');
+        console.error('Account Creation Failed');
       } else {
         $('p#createError').html('Logging in . . .');
-        console.log('Created new account', username);
         Session.set('creatingAccount', false);
       }
 
@@ -103,6 +99,12 @@ if (Meteor.userId()) {
   Meteor.subscribe("packets", Meteor.userId());
 }
 
+Template.buttons.helpers({
+  isPaused() {
+    return Session.get('isPaused') == true;
+  }
+});
+
 Template.buttons.events({
   'click #clear': function () {
     let allPackets = Packets.find();
@@ -113,13 +115,10 @@ Template.buttons.events({
 
   'click #pause': function (event, _target) {
     event.preventDefault();
-    Template.packetList.packets = Packets.find({}, { sort: { "timestamp": "desc" } }).fetch();
+    Session.set('isPaused', true);
   },
-  'click #resume': function (event, _target) {
+  'click #live': function (event, _target) {
     event.preventDefault();
-    Template.packetList.packets = Packets.find({}, { sort: { "timestamp": "desc" } }).fetch();
-    Template.packetList.packets = function () {
-      return Packets.find({}, { sort: { "timestamp": "desc" }, reactive: true }).fetch();
-    };
+    Session.set('isPaused', false);
   }
 });
