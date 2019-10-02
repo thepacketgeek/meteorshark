@@ -10,7 +10,7 @@ This project came-to-be while I was preparing for a presentation on scapy for pe
 
 ![screenshot1](meteorshark1.png "Screenshot #1")
 
-Due to the way packets are stored in the MongoDB for account separation, users must have an account so they can insert packets with their own token.  Once installed, go to <http://localhost:3000/> and create an account, or check out a [public instance, hosted by Meteor](http://meteorshark.meteor.com)!
+Due to the way packets are stored in the MongoDB for account separation, users must have an account so they can insert packets with their own token.  Once installed, go to <http://localhost:3000/> and create an account.
 
 Once logged in, you can see your account Token in the top right corner.  Use this for the `owner` property in the packet.json explained below.
 
@@ -44,7 +44,7 @@ Packet JSON properties are as follows:
 
 1. Install [Node.js](http://nodejs.org/ "Node.js")
 1. Install [Meteor](http://www.meteor.com "Meteor")
-1. Clone Meteorshark
+1. Clone Meteorshark (this repo)
 1. Open terminal and `cd` to `meteorshark`
 1. Run `meteor` command
 1. Access <http://localhost:3000/>
